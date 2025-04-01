@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeCash-Coins Umrechner</title>
+    <style>
+        /* Grundlegende Seiteinstellungen */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+
+        .content {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input, select {
+            padding: 10px;
+            margin: 15px 0;
+            width: 80%;
+            max-width: 400px;
+            border: 2px solid #00d2ff;
+            border-radius: 5px;
+            background: transparent;
+            color: white;
+            font-size: 1.2em;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: #3a7bd5;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #00d2ff;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #3a7bd5;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hintergrundanimation */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/circuit-board.png') repeat;
+            animation: animateBackground 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes animateBackground {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Media Queries für verschiedene Bildschirmgrößen */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            input, select {
+                font-size: 1em;
+                width: 90%;
+            }
+
+            button {
+                font-size: 1em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            input, select {
+                font-size: 0.9em;
+                width: 90%;
+            }
+
+            button {
+                font-size: 1em;
+            }
+
+            .content {
+                padding: 15px;
+            }
+        }
+
+        /* Fußzeile */
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: white;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .footer a {
+            color: #00d2ff;
+            text-decoration: none;
+        }
+
+        .footer .copyright {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="content">
+            <h1>FreeCash-Coins Umrechner</h1>
+            <p>Gib die Anzahl der FreeCash-Coins ein und sieh den Wert in Euro, US-Dollar, Bitcoin, Ethereum, Ripple, Tether.</p>
+
+            <input type="number" id="coinInput" placeholder="Anzahl der Coins" />
+
+            <div class="currency-selector">
+                <label for="currency">Währung:</label>
+                <select id="currency" onchange="updateValue()">
+                    <option value="euro">Euro (€)</option>
+                    <option value="usd">US-Dollar ($)</option>
+                    <option value="btc">Bitcoin (BTC)</option>
+                    <option value="eth">Ethereum (ETH)</option>
+                    <option value="xrp">Ripple (XRP)</option>
+                    <option value="usdt">Tether (USDT)</option>
+                </select>
+            </div>
+
+            <button onclick="updateValue()">Berechnen</button>
+
+            <h2 id="result">Wert: 0 €</h2>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="copyright">© 2025 FreeCash-Coins. Alle Rechte vorbehalten.</p>
+        <p>Umrechnung bereitgestellt von der <a href="https://www.coingecko.com/" target="_blank">CoinGecko-API</a></p>
+    </div>
+
+    <script>
+        // Umrechnungswerte
+        const coinToUSD = 1 / 1000;  // 1000 Coins = 1 US-Dollar
+        let usdToEuroRate = 0.93;  // Umrechnung von US-Dollar in Euro (aktueller Wechselkurs)
+        let usdToBTC = 0;  // Umrechnung von US-Dollar zu Bitcoin
+        let usdToETH = 0;  // Umrechnung von US-Dollar zu Ethereum
+        let usdToXRP = 0;  // Umrechnung von US-Dollar zu Ripple
+        let usdToUSDT = 1; // Tether ist 1:1 zum US-Dollar
+
+        // Funktion zum Abrufen der aktuellen Wechselkurse
+        async function fetchRates() {
+            try {
+                // CoinGecko API zum Abrufen der aktuellen Werte
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,tether&vs_currencies=usd');
+                const data = await response.json();
+
+                // Setzen der aktuellen Wechselkurse
+                usdToBTC = 1 / data.bitcoin.usd;  // 1 US-Dollar in Bitcoin
+                usdToETH = 1 / data.ethereum.usd;  // 1 US-Dollar in Ethereum
+                usdToXRP = 1 / data.ripple.usd;    // 1 US-Dollar in Ripple
+            } catch (error) {
+                console.error("Fehler beim Abrufen der Wechselkurse:", error);
+            }
+        }
+
+        // Umrechnungsfunktion, die aufgerufen wird, wenn die Berechnung durchgeführt wird
+        async function updateValue() {
+            await fetchRates();
+
+            const coinInput = document.getElementById("coinInput").value;
+            const currency = document.getElementById("currency").value;
+
+            // Berechnung des US-Dollar-Werts
+            const usdValue = coinInput * coinToUSD;
+
+            let result;
+            if (currency === "euro") {
+                result = (usdValue * usdToEuroRate).toFixed(2);  // Umrechnung in Euro
+                document.getElementById("result").textContent = `Wert: €${result}`;
+            } else if (currency === "usd") {
+                result = usdValue.toFixed(2);  // In US-Dollar
+                document.getElementById("result").textContent = `Wert: $${result}`;
+            } else if (currency === "btc") {
+                result = (usdValue * usdToBTC).toFixed(8);  // In Bitcoin
+                document.getElementById("result").textContent = `Wert: ₿${result}`;
+            } else if (currency === "eth") {
+                result = (usdValue * usdToETH).toFixed(8);  // In Ethereum
+                document.getElementById("result").textContent = `Wert: Ξ${result}`;
+            } else if (currency === "xrp") {
+                result = (usdValue * usdToXRP).toFixed(8);  // In Ripple
+                document.getElementById("result").textContent = `Wert: XRP ${result}`;
+            } else if (currency === "usdt") {
+                result = usdValue.toFixed(2);  // In Tether
+                document.getElementById("result").textContent = `Wert: USDT ${result}`;
+            }
+        }
+    </script>
+</body>
+</html>
