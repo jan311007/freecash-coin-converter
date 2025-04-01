@@ -208,12 +208,12 @@
     <script>
         // Umrechnungswerte
         const coinToUSD = 1 / 1000;  // 1000 Coins = 1 US-Dollar
-        let usdToEuroRate = 0.93;  // Umrechnung von US-Dollar in Euro (aktueller Wechselkurs)
         let usdToBTC = 0;  // Umrechnung von US-Dollar zu Bitcoin
         let usdToETH = 0;  // Umrechnung von US-Dollar zu Ethereum
         let usdToXRP = 0;  // Umrechnung von US-Dollar zu Ripple
         let usdToUSDT = 1; // Tether ist 1:1 zum US-Dollar
         let usdToLTC = 0;  // Umrechnung von US-Dollar zu Litecoin
+        let usdToEuroRate = 0; // Umrechnung von US-Dollar in Euro (wird durch API ersetzt)
 
         // Funktion zum Abrufen der aktuellen Wechselkurse
         async function fetchRates() {
@@ -228,7 +228,18 @@
                 usdToXRP = 1 / data.ripple.usd;    // 1 US-Dollar in Ripple
                 usdToLTC = 1 / data.litecoin.usd;  // 1 US-Dollar in Litecoin
             } catch (error) {
-                console.error("Fehler beim Abrufen der Wechselkurse:", error);
+                console.error("Fehler beim Abrufen der CoinGecko-Wechselkurse:", error);
+            }
+
+            try {
+                // Wechselkurs von US-Dollar zu Euro über eine andere API
+                const euroResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                const euroData = await euroResponse.json();
+
+                // Setzen des Wechselkurses für Euro
+                usdToEuroRate = euroData.rates.EUR;
+            } catch (error) {
+                console.error("Fehler beim Abrufen des Euro-Wechselkurses:", error);
             }
         }
 
@@ -244,28 +255,35 @@
 
             let result;
             if (currency === "euro") {
-                result = (usdValue * usdToEuroRate).toFixed(2);  // Umrechnung in Euro
+                // Umrechnung in Euro
+                result = (usdValue * usdToEuroRate).toFixed(2);
                 document.getElementById("result").textContent = `Wert: €${result}`;
             } else if (currency === "usd") {
-                result = usdValue.toFixed(2);  // In US-Dollar
+                // In US-Dollar
+                result = usdValue.toFixed(2);
                 document.getElementById("result").textContent = `Wert: $${result}`;
             } else if (currency === "btc") {
-                result = (usdValue * usdToBTC).toFixed(8);  // In Bitcoin
+                // In Bitcoin
+                result = (usdValue * usdToBTC).toFixed(8);
                 document.getElementById("result").textContent = `Wert: ₿${result}`;
             } else if (currency === "eth") {
-                result = (usdValue * usdToETH).toFixed(8);  // In Ethereum
+                // In Ethereum
+                result = (usdValue * usdToETH).toFixed(8);
                 document.getElementById("result").textContent = `Wert: Ξ${result}`;
             } else if (currency === "xrp") {
-                result = (usdValue * usdToXRP).toFixed(8);  // In Ripple
+                // In Ripple
+                result = (usdValue * usdToXRP).toFixed(8);
                 document.getElementById("result").textContent = `Wert: XRP ${result}`;
             } else if (currency === "usdt") {
-                result = usdValue.toFixed(2);  // In Tether
+                // In Tether
+                result = usdValue.toFixed(2);
                 document.getElementById("result").textContent = `Wert: USDT ${result}`;
             } else if (currency === "ltc") {
-                result = (usdValue * usdToLTC).toFixed(8);  // In Litecoin
+                // In Litecoin
+                result = (usdValue * usdToLTC).toFixed(8);
                 document.getElementById("result").textContent = `Wert: LTC ${result}`;
             }
         }
-    </script>
+</script>
 </body>
 </html>
