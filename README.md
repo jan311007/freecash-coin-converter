@@ -14,7 +14,7 @@ Die Berechnungen erfolgen auf Basis von:
 - Umrechnung von US-Dollar zu Euro, Bitcoin, Ethereum, Ripple, Tether und Litecoin erfolgt über eine API.
 
 ## Funktionen
-- Umrechnung von FreeCash-Coins in Euro, US-Dollar, Bitcoin, Ethereum, Ripple und Tether.
+- Umrechnung von FreeCash-Coins in Euro, US-Dollar, Bitcoin, Ethereum, Ripple, Tether und Litecoin.
 - Echtzeit-API-Integration für Wechselkurse.
 - Responsive und benutzerfreundliche Oberfläche.
 
