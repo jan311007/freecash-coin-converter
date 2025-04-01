@@ -27,5 +27,5 @@ Die Umrechnung von Kryptowährungen wird durch die **CoinGecko API** bereitgeste
 
 ## Lizenz
 
-Dieses Projekt ist urheberrechtlich geschützt. Alle Rechte vorbehalten. Siehe [LICENSE](./LICENSE) für Details.
+Dieses Projekt ist urheberrechtlich geschützt. Alle Rechte vorbehalten. Siehe [LICENSE](./LICENSE.txt) für Details.
 
