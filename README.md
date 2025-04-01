@@ -18,6 +18,10 @@ Die Berechnungen erfolgen auf Basis von:
 1. Klone dieses Repository oder lade die Dateien herunter.
 2. Öffne die `index.html`-Datei in deinem Browser, um das Tool zu verwenden.
 
+oder
+
+Klicke [hier](https://deine-webseite.de), um die Webseite aufzurufen.
+
 ## API
 Die Umrechnung von Kryptowährungen wird durch die **CoinGecko API** bereitgestellt. Weitere Informationen findest du hier: [CoinGecko API](https://www.coingecko.com/en/api).
 
