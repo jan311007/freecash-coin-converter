@@ -26,4 +26,6 @@ Die Berechnungen erfolgen auf Basis von:
 Die Umrechnung von Kryptowährungen wird durch die **CoinGecko API** bereitgestellt. Weitere Informationen findest du hier: [CoinGecko API](https://www.coingecko.com/en/api).
 
 ## Lizenz
-Dieses Projekt ist unter der MIT-Lizenz lizenziert.
+
+Dieses Projekt ist urheberrechtlich geschützt. Alle Rechte vorbehalten. Siehe [LICENSE](./LICENSE) für Details.
+
