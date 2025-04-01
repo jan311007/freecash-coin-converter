@@ -11,7 +11,7 @@ Dieses Projekt ermöglicht es den Nutzern, die Anzahl der FreeCash-Coins einzuge
 
 Die Berechnungen erfolgen auf Basis von:
 - **1.000 FreeCash-Coins = 1 US-Dollar**
-- Umrechnung von US-Dollar zu Euro, Bitcoin, Ethereum, Ripple und Tether erfolgt über eine API.
+- Umrechnung von US-Dollar zu Euro, Bitcoin, Ethereum, Ripple, Tether und Litecoin erfolgt über eine API.
 
 ## Funktionen
 - Umrechnung von FreeCash-Coins in Euro, US-Dollar, Bitcoin, Ethereum, Ripple und Tether.
