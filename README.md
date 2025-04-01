@@ -1,3 +1,7 @@
+# Mein Projekt
+
+Klicke [hier](https://jan311007.github.io/freecash-coin-converter/), um die Webseite aufzurufen.
+
 # FreeCash Coin Converter
 
 Ein einfaches Tool, das den Wert von FreeCash-Coins in verschiedene Währungen umrechnet, darunter Euro, US-Dollar, Bitcoin (BTC), Ethereum (ETH), Ripple (XRP), Tether (USDT) und Litecoin (LTC). 
@@ -17,10 +21,6 @@ Die Berechnungen erfolgen auf Basis von:
 ## Installation
 1. Klone dieses Repository oder lade die Dateien herunter.
 2. Öffne die `index.html`-Datei in deinem Browser, um das Tool zu verwenden.
-
-  # Mein Projekt
-
-  Klicke [hier](https://jan311007.github.io/freecash-coin-converter/), um die Webseite aufzurufen.
 
 ## API
 Die Umrechnung von Kryptowährungen wird durch die **CoinGecko API** bereitgestellt. Weitere Informationen findest du hier: [CoinGecko API](https://www.coingecko.com/en/api).
